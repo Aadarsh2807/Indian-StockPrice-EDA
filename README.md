@@ -12,7 +12,7 @@
 
 ## Overview
 
-This project investigates how three major Indian equities behaved over approximately one year of daily market data:
+This project investigates how three major Indian equities behaved over one year of daily NSE closing prices (25 Sep 2025 to 25 Sep 2026, 248 trading days):
 
 - **Reliance Industries** — `RELIANCE.NS`
 - **Tata Consultancy Services** — `TCS.NS`
@@ -48,16 +48,16 @@ To answer this, the project examines:
 
 | Stock    | Total Return | Avg. Daily Return | Volatility | Best Day | Worst Day | Max Drawdown |
 |----------|-------------:|-------------------:|-----------:|---------:|----------:|-------------:|
-| Reliance |      -10.25% |            -0.0347% |      1.29% |   +3.53% |    -4.60% |       -23.08% |
-| TCS      |      -26.68% |            -0.1077% |      1.78% |   +6.51% |    -8.39% |       -38.46% |
-| Infosys  |      -30.13% |            -0.1250% |      1.88% |   +5.68% |    -7.26% |       -40.43% |
+| Reliance |      -10.25% |            -0.0353% |      1.30% |   +3.53% |    -4.60% |       -23.08% |
+| TCS      |      -26.68% |            -0.1094% |      1.80% |   +6.51% |    -8.39% |       -38.46% |
+| Infosys  |      -30.13% |            -0.1271% |      1.90% |   +5.68% |    -7.26% |       -40.43% |
 
 **Historical observations**
 
 - All three stocks recorded negative price returns over the analyzed period.
-- Reliance recorded the lowest observed daily-return volatility among the three, at 1.29%.
+- Reliance recorded the lowest observed daily-return volatility among the three, at 1.30%.
 - TCS recorded both the largest single-day positive movement (+6.51%) and the largest single-day negative movement (-8.39%).
-- Infosys recorded the highest daily volatility (1.88%) and the largest maximum drawdown in the sample (-40.43%).
+- Infosys recorded the highest daily volatility (1.90%) and the largest maximum drawdown in the sample (-40.43%).
 - Return, volatility, and drawdown capture different characteristics of historical price behavior.
 
 *These are historical observations from the selected sample and are not predictions of future performance.*
@@ -80,9 +80,9 @@ Volatility is calculated as the standard deviation of daily returns.
 
 | Stock    | Daily Volatility |
 |----------|------------------:|
-| Reliance |             1.29% |
-| TCS      |             1.78% |
-| Infosys  |             1.88% |
+| Reliance |             1.30% |
+| TCS      |             1.80% |
+| Infosys  |             1.90% |
 
 Volatility measures variability in observed daily returns; it does not by itself indicate whether returns were positive or negative.
 
@@ -204,14 +204,13 @@ This makes the three price series directly comparable on the same scale.
 ```text
 Indian-StockPrice-EDA/
 ├── 01_stock_eda.ipynb
+├── data/
+│   └── prices.csv
 ├── outputs/
 │   ├── normalized_performance.png
 │   ├── volatility_comparison.png
 │   ├── drawdown_comparison.png
 │   └── stock_comparison.csv
-├── data/
-├── notebooks/
-├── src/
 ├── .gitignore
 ├── requirements.txt
 └── README.md
@@ -223,15 +222,7 @@ Indian-StockPrice-EDA/
 
 **Requirements**
 
-```text
-pandas
-numpy
-matplotlib
-yfinance
-jupyter
-```
-
-The complete environment specification is available in `requirements.txt`.
+The project uses pandas, NumPy, Matplotlib, yfinance and Jupyter. Pinned versions are listed in `requirements.txt`.
 
 **Installation**
 
@@ -259,13 +250,13 @@ Launch Jupyter:
 jupyter notebook
 ```
 
-Open `01_stock_eda.ipynb` and run the notebook cells sequentially.
+Open `01_stock_eda.ipynb` and run the notebook cells sequentially. It reads the saved prices from `data/prices.csv`, so it reproduces the results above without an internet connection.
 
 ---
 
 ## Data Source
 
-Historical market data was retrieved programmatically using `yfinance`.
+Daily closing prices were downloaded once with `yfinance` and saved to `data/prices.csv`, so the analysis can be rerun on exactly the same data.
 
 NSE ticker symbols used:
 
@@ -275,7 +266,7 @@ TCS.NS
 INFY.NS
 ```
 
-The dataset represents historical market observations available through the data provider at the time of retrieval.
+The dataset represents historical market observations available through the data provider at the time of retrieval. To download the same date range again, set `DOWNLOAD_FRESH_DATA = True` in the notebook; Yahoo Finance sometimes revises its history, so a fresh download may differ slightly from the saved file.
 
 ---
 
@@ -336,7 +327,7 @@ This project was built to develop practical financial analytics skills rather th
 This project is intentionally limited in scope.
 
 **Dataset limitations**
-- Approximately one year of historical data was analyzed.
+- One year of historical data (248 trading days) was analyzed.
 - Only three equities were included.
 - The analysis focuses primarily on price behavior.
 - Results depend on the historical sample selected.
